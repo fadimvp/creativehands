@@ -1,14 +1,16 @@
 # _*_ coding: utf-8 _*_
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
 from django.urls import reverse
 # Create your models here.
 from docutils.parsers.rst.directives.admonitions import Note
-
+User = settings.AUTH_USER_MODEL
 
 class Product(models.Model):
+    user = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     PRDName = models.CharField(max_length=75)
     PRDCategory = models.ForeignKey('Category', on_delete=models.CASCADE, blank=True, null=True)
     PRDIMG = models.ImageField(upload_to='', blank=True, null=True)

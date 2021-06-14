@@ -1680,6 +1680,39 @@ margin-left: 50px;
 color:red;
 margin-left: 10px;
 }
+
+*/
+#id_username,#id_password:-moz-focusring{
+color:transparent;text-shadow:0 0 0 #495057
+}
+#id_username,#id_password:focus{color:#495057;background-color:#fff;
+border-color:#80bdff;
+outline:0;
+box-shadow:0 0 0 .2rem rgba(0,123,255,.25)
+}
+#id_username::-webkit-input-placeholder{color:#6c757d;opacity:1}
+#id_username::-moz-placeholder{color:#6c757d;opacity:1}
+#id_username:-ms-input-placeholder{color:#6c757d;opacity:1}
+#id_username::-ms-input-placeholder{color:#6c757d;opacity:1}
+#id_username:placeholder{color:#6c757d;opacity:1}
+#id_username:disabled,.form-control[readonly]{background-color:#e9ecef;opacity:1}input[type=date]
+#id_username,input[type=datetime-local].form-control,input[type=month].form-control,input[type=time]
+#id_username{-webkit-appearance:none;-moz-appearance:none;appearance:none}select
+#id_username:focus::-ms-value{color:#495057;background-color:#fff}
+
+
+#id_username,#id_password{display:block;
+width:100%;height:calc(1.5em + .75rem + 2px);
+padding:.375rem .75rem;
+font-size:1rem;font-weight:400;
+line-height:1.5;color:#495057;
+background-color:#fff;
+background-clip:padding-box;
+border:1px solid #ced4da;
+border-radius:.25rem;
+transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
+
 /* -------- Checkount page CSS end ------- */
 /* -------- ddd ------- */
 /* -------- ddd ------- */
