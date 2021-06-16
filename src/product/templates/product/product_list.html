@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<body class="body-class">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
+    <!-- Logo column -->
+    <div class="navbar-nav col-lg-2 col-sm-12 order-lg-1 text-center">
+        <a href="#" class="navbar-brand mx-auto"><img class="logo animate__animated  animate__fadeIn animate__slower"
+                                                      src="{% static 'images/logo.png' %}" width="80px" alt="" /></a>
+    </div>
+    <!-- Menu Column -->
+    <div class="navbar-nav col-lg-5 col-sm-12 order-lg-2" style="margin: 20px 0">
+        <div class="container-fluid p-0 justify-content-center">
+            <!-- Account -->
+            <div class="navbar-nav col-4 col-lg-1 order-lg-3 justify-content-center text-center p-0">
+                <a href="{% url 'auth:login' %}" class="nav-item">
+                    <i class="fas fa-user" style="font-size: 20px" data-toggle="modal" data-target="#cartModal"
+                       value="5">
+                    </i>
+                </a>
+            </div>
+            <!-- cart -->
+            <div class="navbar-nav col-4 col-lg-3 order-lg-2 justify-content-center text-center p-0 cart-info" id="cart-info">
+                <a href="#" class="nav-item " data-toggle="modal" data-target="#cartModal">
+                    <span class="price">ر.س 0000.00</span>
+                    <i class="fas fa-shopping-basket" style="font-size: 20px" data-toggle="modal"
+                       data-target="#cartModal" value="5">
+                    </i>
+                </a>
+            </div>
+            <!-- menu -->
+            <div class="navbar-nav col-4 col-lg-8 order-lg-1 text-center p-0">
+                <!-- Toggle Button -->
+                <button class="toggle-collapse" type="button" id="toggle-button" onclick="showMenuFunction()">
+                    <i class="fa fa-bars fa-lg" id="toggle-icon"></i>
+                </button>
+                <div class="toggle-menu animate__animated  navbar-collapse justify-content-end" id="toggle-menu">
+                    <!-- Menu Items -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link text-light mr-4" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Art
+                            </a>
+                            <div class="dropdown-menu dropdown animate__animated  animate__fadeIn animate__fast"
+                                 aria-labelledby="navbarDropdown">
+                                <!-- This is from database Categories -->
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Visual
+                            </a>
+
+                            <div class="dropdown-menu animate__animated  animate__fadeIn animate__fast"
+                                 aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Column -->
+    <div class="col-lg-5 col-sm-12 order-lg-0">
+        <!-- Search section -->
+        <form class="form-inline">
+            <select class="select_search custom-select" id="inputGroupSelect01">
+                <!-- these options will be selected from Categories database -->
+                <option selected>All</option>
+                <option value="1">Hello</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <!-- Ajax Filtering on typing letters -->
+            <input type="text" class="search_text form-control" placeholder="Search" />
+        </form>
+    </div>
+</nav>
+
+<!-- Mini cart summary section start  -->
+<div class="cart-info-base" id="cart-info-base">
+    <!-- Cart information start  -->
+        <div role="button" id="close-btn" class="close-btn" >
+        <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
+    </div>
+    <div class="card-info-wrap">
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="#" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %}" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+    </div>
+    <!-- Cart information end  -->
+    <!-- Price information -->
+    <div class="cart-info-price">
+        <strong>Subtotal: </strong>
+        <span class="cart-info-subtotal">
+            <bdi>
+                18000.99
+                <span class="cart-info-currency-symbol">
+                    SR
+                </span>
+            </bdi>
+        </span>
+    </div>
+    <div class="cart-info-button btn-group">
+        <a class="info-view-cart info-btn" href="#">View cart</a>
+        <a class="info-checkout info-btn" href="#">Checkout</a>
+    </div>
+</div>
+<!-- Mini cart summary section end  -->
+
+<section class="body-wrapper"> <!-- Body Background section start -->
+<!-- Home Category section start  -->
+    <section class="cateory-slider-section">
+        <div class="container">
+            <div class="row">
+                <div class="owl-carousel owl-category owl-theme">
+
+                    <div class="item">
+                        <div class="col-xs-12 cat-card">
+                            <div class="card">
+                                <a href="#"><img class="card-img-top" src="{% static 'images/pottery.jpeg' %} " alt="Wood Craft"></a>
+                                <div class="card-body">
+
+                                    <a href="#">
+                                        <h5 class="card-title cat-card-title">Pottery & Ceramics</h5>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        <div class="item">
+                        <div class="col-xs-12 cat-card">
+                            <div class="card">
+                                <a href="#"><img class="card-img-top" src="{% static 'images/pottery.jpeg' %} " alt="Wood Craft"></a>
+                                <div class="card-body">
+
+                                    <a href="#">
+                                        <h5 class="card-title cat-card-title">Pottery & Ceramics</h5>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Produc category casouel section end  -->
+    <!-- New Products section start  -->
+    <section class="new-product-section">
+        <div class="container">
+            <div class="row">
+                <div class="heading-title">
+                    <h2>New Products</h2>
+                </div>
+                <div class="new-product">
+
+                    <ul class="product-group">
+                                        {% for product in product_list%}
+
+                        <li>
+
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <a href="#"><img class="img-fluid" src="{{product.PRDIMG.url }} " alt="product-title"></a>
+                                </div>
+                                <div class="card-content text-center">
+                                    <a href=" {{product.get_absolute_url}}">
+                                        <h2 class="product-title">{{ product.PRDName}}</h2>
+                                    </a>
+                                    <div class="rating">
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </div>
+                                    <div class="price-group">
+                                            {%if product.PRDDisc > 0 %}
+                                            <del><span class="del-price-list">{{ product.PRDPrice}}  SR</span></del>
+                                             <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+
+                                                     {% else %}
+                                             <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+
+                                                </ins>
+                                            {% endif %}
+                                    </div>
+                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                </div>
+                            </div>
+                        </li>
+                                            {% endfor %}
+
+                    </ul>
+
+                    <a class="show-more-btn" href="#">Show More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- New Products section end  -->
+    <!-- Featured product section start  -->
+    <section class="featured-product-section">
+        <div class="container">
+            <div class="row">
+                <div class="heading-title">
+                    <h2>Featured Products</h2>
+                </div>
+                <div class="new-product">
+                    <ul class="product-group">
+                        <li>
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <a href="#"><img class="img-fluid" src="{% static 'images/wicker.jpeg' %} "
+                                            alt="product-title"></a>
+                                </div>
+                                <div class="card-content text-center">
+                                    <a href="#">
+                                        <h2 class="product-title">مبخر خشبي مع صندوق</h2>
+                                    </a>
+                                    <div class="rating">
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </div>
+                                    <div class="price-group">
+                                        <del><span class="price-amount amount">180.00 SR</span></del>
+                                        <ins><span class="price-amount amount">150.00 SR</span></ins>
+                                    </div>
+                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                    <a class="show-more-btn" href="#">Show More</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Featured Products section end  -->
+    <!-- Limited offer section start  -->
+    <section class="limited-offer-section">
+        <div class="container">
+            <div class="row">
+                <div class="heading-title">
+                    <h2>Limited Products</h2>
+                </div>
+                <div class="new-product">
+                    <ul class="product-group">
+
+
+
+
+
+                        <li>
+                            <!-- onsale product start-->
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
+                                    <span class="onsale">Sale</span>
+                                </div>
+                                <div class="card-content text-center">
+                                    <a href="#">
+                                        <h2 class="product-title">مبخر خشبي</h2>
+                                    </a>
+                                    <div class="rating">
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </div>
+                                    <div class="price-group">
+                                        <ins><span class="price-amount amount">150.00 SR</span></ins>
+                                    </div>
+                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                </div>
+                            </div>
+                            <!-- onsale product end-->
+                        </li>
+
+                    </ul>
+                    <a class="show-more-btn" href="#">Show More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Limiter offer section end  -->
+
+</section> <!-- Body Background section end -->
+
+
+</body>
+{% endblock %}
+<!-- body bottom javascript start  -->
+<script type="text/javascript" src=" {% static 'js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/slick.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/fontawesome.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/aos2.3.4.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/wow.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/main.js' %}"></script>
+
+
+<!-- body bottom javascript end  -->
+
+</html>
