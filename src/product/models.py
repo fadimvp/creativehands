@@ -3,14 +3,26 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
-
+from django.db.models.signals import post_save
 from django.urls import reverse
 # Create your models here.
 from docutils.parsers.rst.directives.admonitions import Note
+
 User = settings.AUTH_USER_MODEL
 
+
+#
+# class ProductQuerySet(models.query.QuerySet):
+#     def PRDName(self):
+#         return self.filter(PRDName=False)
+# class ProductManger (models.Manager):
+#     def get_queryset(self):
+#         return ProductQuerySet(self.model,using=self._db)
+#     def all (self,*args,**kwargs):
+#         return self.get_queryset().PRDName()
 class Product(models.Model):
-    user = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
+    # objects =ProductManger()
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     PRDName = models.CharField(max_length=75)
     PRDCategory = models.ForeignKey('Category', on_delete=models.CASCADE, blank=True, null=True)
     PRDIMG = models.ImageField(upload_to='', blank=True, null=True)
@@ -69,7 +81,20 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('product:pro_detail', args={self.PRDSlug})
+        return reverse('product:pro_detail', kwargs={"slug": self.PRDSlug})
+
+
+class Varation_Img(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    PRDName = models.CharField(max_length=75)
+
+    PRDIMG = models.ImageField(upload_to='', blank=True, null=True)
+    def __str__(self):
+        return str(Varation_Img.PRDName)
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
+
+
 
 
 class Product_Img(models.Model):
