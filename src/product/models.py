@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.urls import reverse
+from django.utils.text import slugify
 # Create your models here.
 from docutils.parsers.rst.directives.admonitions import Note
 
@@ -84,26 +85,39 @@ class Product(models.Model):
         return reverse('product:pro_detail', kwargs={"slug": self.PRDSlug})
 
 
-class Varation_Img(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+class Varation(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     PRDName = models.CharField(max_length=75)
 
     PRDIMG = models.ImageField(upload_to='', blank=True, null=True)
+
     def __str__(self):
-        return str(Varation_Img.PRDName)
+        return str(self.product)
+
     def get_absolute_url(self):
         return self.product.get_absolute_url()
 
+def image_upoad_to(instance, filename):
+        title = instance.PRDIProduct
+        slug = slugify(title)
+        file_extansion = filename.split(".")
+        new_filename = "%s.%s"
 
+        return "prod/%s/%s" % (slug, filename)
+
+
+# def image_upoad_to(instance, filename):
+#     imgname , extension =filename.split('.')
+#     return "varimg/%s/%s"%(instance.id, extension)
 
 
 class Product_Img(models.Model):
     PRDIProduct = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-    PRDImg = models.ImageField(upload_to='')
+    PRDImg = models.ImageField(upload_to=image_upoad_to)
 
     def __str__(self):
-        return str(self.PRDImg)
+        return str(self.PRDIProduct)
 
 
 class Category(models.Model):

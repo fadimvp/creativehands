@@ -81,7 +81,7 @@
     <!-- Search Column -->
     <div class="col-lg-5 col-sm-12 order-lg-0">
         <!-- Search section -->
-        <form class="form-inline">
+        <form class="form-inline" action="" method="GET">
             <select class="select_search custom-select" id="inputGroupSelect01">
                 <!-- these options will be selected from Categories database -->
                 <option selected>All</option>
@@ -90,7 +90,7 @@
                 <option value="3">Three</option>
             </select>
             <!-- Ajax Filtering on typing letters -->
-            <input type="text" class="search_text form-control" placeholder="Search" />
+            <input name="q" type="search"  class="search_text form-control" placeholder="Search" />
         </form>
     </div>
 </nav>
@@ -249,6 +249,7 @@
                         <li>
 
                             <div class="product-card">
+
                                 <div class="card-img">
                                     <a href="#"><img class="img-fluid" src="{{product.PRDIMG.url }} " alt="product-title"></a>
                                 </div>

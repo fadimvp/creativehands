@@ -200,16 +200,26 @@
                 <div class="product-image-section">
                     <div class="img-gallery">
                         <div class="img-list">
-                            <img src="{% static 'images/pottery.jpeg' %} " alt="" class="thumnail active" id="thumnail">
-                            <img src="{% static 'images/resin.jpeg' %} " alt="" class="thumnail" id="thumnail">
-                            <img src="{% static 'images/swing.jpg' %} " alt="" class="thumnail" id="thumnail">
-                            <img src="{% static 'images/wicker.jpeg' %} " alt="" class="thumnail" id="thumnail">
-                            <img src="{% static 'images/woo.jpeg' %} " alt="" class="thumnail" id="thumnail">
+
+
+
+
+                           {% for f in pro_detail.varation_set.all %}
+
+
+                            <img src="
+                                  {{ f.PRDIMG.url }}" alt="" class="thumnail active" id="thumnail">
+
+                          {% endfor %}
+
                         </div>
                     </div>
+
                     <div class="image-preview">
-                        <img id="featured" src="{% static 'images/swing.jpg' %} " alt="">
+                        <img id="featured" src="{{ pro_detail.PRDIMG.url}} " alt="">
                     </div>
+
+
                     <button class="img-view"></button>
                 </div>
                 <!-- Product image section end -->
