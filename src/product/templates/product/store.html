@@ -192,54 +192,15 @@
 </div>
 <!-- Mini cart summary section end  -->
 
-<section class="body-wrapper"> <!-- Body Background section start -->
-<!-- Home Category section start  -->
-    <section class="cateory-slider-section">
-        <div class="container">
-            <div class="row">
-                <div class="owl-carousel owl-category owl-theme">
-
-                    <div class="item">
-                        <div class="col-xs-12 cat-card">
-                            <div class="card">
-                                <a href="#"><img class="card-img-top" src="{% static 'images/pottery.jpeg' %} " alt="Wood Craft"></a>
-                                <div class="card-body">
-
-                                    <a href="#">
-                                        <h5 class="card-title cat-card-title">Pottery & Ceramics</h5>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="item">
-                        <div class="col-xs-12 cat-card">
-                            <div class="card">
-                                <a href="#"><img class="card-img-top" src="{% static 'images/pottery.jpeg' %} " alt="Wood Craft"></a>
-                                <div class="card-body">
-
-                                    <a href="#">
-                                        <h5 class="card-title cat-card-title">Pottery & Ceramics</h5>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Produc category casouel section end  -->
     <!-- New Products section start  -->
     <section class="new-product-section">
         <div class="container">
             <div class="row">
                 <div class="heading-title">
-                    <h2>New Products</h2>
+                    <h2>{{ product_list.PRDCategory }} </h2>
+                    <span class="mr-md-auto">
+                    Found <b>  {{ product_count}}</b> items
+                    </span>
                 </div>
                 <div class="new-product">
 
@@ -289,98 +250,8 @@
         </div>
     </section>
     <!-- New Products section end  -->
-    <!-- Featured product section start  -->
-    <section class="featured-product-section">
-        <div class="container">
-            <div class="row">
-                <div class="heading-title">
-                    <h2>Featured Products</h2>
-                </div>
-                <div class="new-product">
-                    <ul class="product-group">
-                        <li>
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <a href="#"><img class="img-fluid" src="{% static 'images/wicker.jpeg' %} "
-                                            alt="product-title"></a>
-                                </div>
-                                <div class="card-content text-center">
-                                    <a href="#">
-                                        <h2 class="product-title">مبخر خشبي مع صندوق</h2>
-                                    </a>
-                                    <div class="rating">
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star-half-alt"></i></span>
-                                    </div>
-                                    <div class="price-group">
-                                        <del><span class="price-amount amount">180.00 SR</span></del>
-                                        <ins><span class="price-amount amount">150.00 SR</span></ins>
-                                    </div>
-                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
-                                </div>
-                            </div>
-                        </li>
 
 
-                    </ul>
-                    <a class="show-more-btn" href="#">Show More</a>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Featured Products section end  -->
-    <!-- Limited offer section start  -->
-    <section class="limited-offer-section">
-        <div class="container">
-            <div class="row">
-                <div class="heading-title">
-                    <h2>Limited Products</h2>
-                </div>
-                <div class="new-product">
-                    <ul class="product-group">
-
-
-
-
-
-                        <li>
-                            <!-- onsale product start-->
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
-                                    <span class="onsale">Sale</span>
-                                </div>
-                                <div class="card-content text-center">
-                                    <a href="#">
-                                        <h2 class="product-title">مبخر خشبي</h2>
-                                    </a>
-                                    <div class="rating">
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star-half-alt"></i></span>
-                                    </div>
-                                    <div class="price-group">
-                                        <ins><span class="price-amount amount">150.00 SR</span></ins>
-                                    </div>
-                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
-                                </div>
-                            </div>
-                            <!-- onsale product end-->
-                        </li>
-
-                    </ul>
-                    <a class="show-more-btn" href="#">Show More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Limiter offer section end  -->
 
 </section> <!-- Body Background section end -->
 

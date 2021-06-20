@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'product',
     'settings',
      'users',
+    'accounts',
 
 
 ]
@@ -75,6 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
+AUTH_USER_MODEL = 'accounts.Account'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

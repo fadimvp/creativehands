@@ -36,7 +36,7 @@ class Product(models.Model):
     PRDCreated = models.DateTimeField()
     PRDISNew = models.BooleanField(default=False)
     PRDISbest = models.BooleanField(default=False)
-    qty = models.IntegerField(default=0)
+    stock = models.IntegerField(default=0)
 
     # Additional data
     on_sale = models.BooleanField(default=False)
@@ -125,6 +125,7 @@ class Category(models.Model):
     CATParent = models.ForeignKey('self', limit_choices_to={'CATParent__isnull': True}, on_delete=models.CASCADE,
                                   blank=True, null=True)
     CATDesc = models.TextField()
+    slug = models.SlugField()
     CATImg = models.ImageField(upload_to='Category/')
 
     def __str__(self):
