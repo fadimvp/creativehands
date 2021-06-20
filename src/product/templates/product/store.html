@@ -81,17 +81,21 @@
     <!-- Search Column -->
     <div class="col-lg-5 col-sm-12 order-lg-0">
         <!-- Search section -->
-        <form class="form-inline" action="{% url 'products:search'%}" method="GET">
+        <form class="form-inline" action="{% url 'products:store'%}" method="GET">
             <select class="select_search custom-select" id="inputGroupSelect01">
                 <!-- these options will be selected from Categories database -->
-                <option selected>All</option>
-                <option value="1">Hello</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {% for category in d %}
+              <a href="#"> <option  value="1" >  {{ category.CATName }} </option></a>
+                {% endfor %}
+
             </select>
             <!-- Ajax Filtering on typing letters -->
             <input name="q" type="search"  class="search_text form-control" placeholder="Search" />
+
         </form>
+
+
+
     </div>
 </nav>
 

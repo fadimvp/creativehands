@@ -8,10 +8,17 @@ from django.utils.translation import gettext as aa
 
 def Product_list(request):
     if 'q' in request.GET:
-        q = request.GET['q']
+        q = request.GET.get('q')
+
         product_list = Product.objects.filter(PRDName__icontains=q)
+        d = Category.objects.all()
+
     else:
+        d = Category.objects.all()
         product_list = Product.objects.all()
+
+
+
 
     paginator = Paginator(product_list, 6)
     page_number = request.GET.get('page')
@@ -19,7 +26,17 @@ def Product_list(request):
 
     context = {
         'product_list': product_list,
+        'd':d,
 
+    }
+    return render(request, 'product/product_list.html', context)
+
+def category (request,category_slug):
+
+    d = get_object_or_404(Category,slug=category_slug)
+
+    context={
+        'd':d
     }
     return render(request, 'product/product_list.html', context)
 
@@ -41,13 +58,18 @@ def store(request,category_slug=None):
         categories = get_object_or_404(Category, slug=category_slug)
         product_list = Product.objects.filter(PRDCategory=categories, approved=True)
         product_count= product_list.count()
+        d = Category.objects.all()
+
     else:
         product_list = Product.objects.all().filter(approved=True)
         product_count= product_list.count()
+        d = Category.objects.all()
+
 
     context = {
         'product_list': product_list,
         'product_count': product_count,
+        'd':d
 
     }
     return render(request, 'product/store.html', context)

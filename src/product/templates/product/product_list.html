@@ -198,38 +198,26 @@
         <div class="container">
             <div class="row">
                 <div class="owl-carousel owl-category owl-theme">
+                {% for dd in d %}
 
                     <div class="item">
                         <div class="col-xs-12 cat-card">
                             <div class="card">
-                                <a href="#"><img class="card-img-top" src="{% static 'images/pottery.jpeg' %} " alt="Wood Craft"></a>
+                                <a href="{{ dd.get_url }}"><img class="card-img-top" src="{{ dd.CATImg.url}} " alt="Wood Craft"></a>
                                 <div class="card-body">
 
-                                    <a href="#">
-                                        <h5 class="card-title cat-card-title">Pottery & Ceramics</h5>
+                                    <a href="{{ dd.get_url }}">
+                                        <h5 class="card-title cat-card-title">{{dd.CATName}}</h5>
                                     </a>
 
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                                        <div class="item">
-                        <div class="col-xs-12 cat-card">
-                            <div class="card">
-                                <a href="#"><img class="card-img-top" src="{% static 'images/pottery.jpeg' %} " alt="Wood Craft"></a>
-                                <div class="card-body">
-
-                                    <a href="#">
-                                        <h5 class="card-title cat-card-title">Pottery & Ceramics</h5>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                                                {% endfor %}
 
 
-                </div>
             </div>
         </div>
     </section>

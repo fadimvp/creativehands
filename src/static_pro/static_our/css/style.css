@@ -631,6 +631,7 @@ button.owl-next {
   text-align: center;
   float: left;
   display: block;
+  width:190px;
 }
 
 .product-card .card-img {

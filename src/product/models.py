@@ -82,7 +82,7 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('product:pro_detail', kwargs={"slug": self.PRDSlug})
+        return reverse('products:pro_detail', kwargs={"slug": self.PRDSlug})
 
 
 class Varation(models.Model):
@@ -97,13 +97,14 @@ class Varation(models.Model):
     def get_absolute_url(self):
         return self.product.get_absolute_url()
 
-def image_upoad_to(instance, filename):
-        title = instance.PRDIProduct
-        slug = slugify(title)
-        file_extansion = filename.split(".")
-        new_filename = "%s.%s"
 
-        return "prod/%s/%s" % (slug, filename)
+def image_upoad_to(instance, filename):
+    title = instance.PRDIProduct
+    slug = slugify(title)
+    file_extansion = filename.split(".")
+    new_filename = "%s.%s"
+
+    return "prod/%s/%s" % (slug, filename)
 
 
 # def image_upoad_to(instance, filename):
@@ -127,6 +128,13 @@ class Category(models.Model):
     CATDesc = models.TextField()
     slug = models.SlugField()
     CATImg = models.ImageField(upload_to='Category/')
+
+    class Meta:
+        verbose_name = 'category'
+        verbose_name_plural = 'categoryios'
+
+    def get_url(self):
+        return reverse('products:category_slug', args={self.slug})
 
     def __str__(self):
         return self.CATName
