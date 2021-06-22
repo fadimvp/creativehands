@@ -1,89 +1,109 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 # Create your views here.
-from .models import Product ,Category
+from .models import Product, Category
 from django.core.paginator import Paginator
 from .models import Category
+from .forms import SearchForm
+from .filters import Product_list_filter
 from django.utils.translation import gettext as aa
 
+from django.db.models import Q
 
+
+# Display  all products  and counts on Home page and category all
 def Product_list(request):
-    if 'q' in request.GET:
-        q = request.GET.get('q')
-
-        product_list = Product.objects.filter(PRDName__icontains=q)
-        d = Category.objects.all()
-
-    else:
-        d = Category.objects.all()
-        product_list = Product.objects.all()
-
-
-
-
-    paginator = Paginator(product_list, 6)
-    page_number = request.GET.get('page')
+    product_list = Product.objects.filter(approved=True)  # Display  all products if you check in approved
+    product_count = product_list.count()  # count all products
+    d = Category.objects.all()  # display all category on home page
+    # paginator
+    paginator = Paginator(product_list, 6)  # product_list == how many products  display on one page
+    page_number = request.GET.get('page')  # get number data
     product_list = paginator.get_page(page_number)
 
     context = {
         'product_list': product_list,
-        'd':d,
-
+        'product_count': product_count,
+        'd': d
     }
     return render(request, 'product/product_list.html', context)
 
-def category (request,category_slug):
 
-    d = get_object_or_404(Category,slug=category_slug)
+# if you selected show more display all products on home page
+def All_products(request):
+    product_list = Product.objects.all()
+    product_count = product_list.count()
+    d = Category.objects.all()
 
-    context={
-        'd':d
+    context = {
+        'product_list': product_list,
+        'd': d,
+        'product_count': product_count,
     }
+    return render(request, 'product/all_products.html', context)
+
+''' display all category and through date to url.py must send tow arg used data with models  def category 
+get_url  '''
+def category(request, category_slug):
+    d = get_object_or_404(Category, slug=category_slug)
+
+    context = {
+        'd': d
+    }
+
     return render(request, 'product/product_list.html', context)
 
 
 def Product_detail(request, slug):
     # pro_detail = Product.objects.get(slug=slug)
     pro_detail = get_object_or_404(Product, PRDSlug=slug)
+    d = Category.objects.all()
+
     context = {
         'pro_detail': pro_detail,
+        'd': d,
 
     }
     return render(request, 'product/singlpage.html', context)
 
-
-def store(request,category_slug=None):
+# store :  any  products under category  and  slug
+def store(request, category_slug=None):
     categories = None
     product_list = None
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
         product_list = Product.objects.filter(PRDCategory=categories, approved=True)
-        product_count= product_list.count()
+        product_count = product_list.count()
         d = Category.objects.all()
 
     else:
         product_list = Product.objects.all().filter(approved=True)
-        product_count= product_list.count()
+        product_count = product_list.count()
         d = Category.objects.all()
-
 
     context = {
         'product_list': product_list,
         'product_count': product_count,
-        'd':d
+        'd': d,
 
     }
     return render(request, 'product/store.html', context)
 
-
+# search  method  if you want search  about products inside one category
 def search(request):
-    if 'q' in request.GET:
-        q = request.GET['q']
-        product_list = Product.objects.filter(PRDName__icontains=q)
-        print("dsdsd")
-    else:
-        product_list = Product.objects.all()
-        print("dsd")
-    context = {
-        'product_list': product_list,
-    }
-    return render(request, 'product/product_list.html', context)
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query'] # get  data from input query name from  base.html
+            catid = form.cleaned_data['catid'] # get  data from input select element   base.html
+            if catid == 0:   # condition  if catid value = "0"  display  all products
+                product_list = Product.objects.filter(PRDName__icontains=query, approved=True)
+            else:
+                product_list = Product.objects.filter(PRDName__icontains=query, PRDCategory_id=catid, approved=True)
+            d = Category.objects.all()
+            context = {
+                'product_list': product_list,
+                'd': d,
+            }
+
+            return render(request, 'product/product_list.html', context)
+    return HttpResponseRedirect('/')  # if you do search  other page same page details or anther page back to display all products in home page

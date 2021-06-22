@@ -4,98 +4,7 @@
 {% block body %}
 
 <body class="body-class">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
-    <!-- Logo column -->
-    <div class="navbar-nav col-lg-2 col-sm-12 order-lg-1 text-center">
-        <a href="#" class="navbar-brand mx-auto"><img class="logo animate__animated  animate__fadeIn animate__slower"
-                                                      src="{% static 'images/logo.png' %}" width="80px" alt="" /></a>
-    </div>
-    <!-- Menu Column -->
-    <div class="navbar-nav col-lg-5 col-sm-12 order-lg-2" style="margin: 20px 0">
-        <div class="container-fluid p-0 justify-content-center">
-            <!-- Account -->
-            <div class="navbar-nav col-4 col-lg-1 order-lg-3 justify-content-center text-center p-0">
-                <a href="{% url 'auth:login' %}" class="nav-item">
-                    <i class="fas fa-user" style="font-size: 20px" data-toggle="modal" data-target="#cartModal"
-                       value="5">
-                    </i>
-                </a>
-            </div>
-            <!-- cart -->
-            <div class="navbar-nav col-4 col-lg-3 order-lg-2 justify-content-center text-center p-0 cart-info" id="cart-info">
-                <a href="#" class="nav-item " data-toggle="modal" data-target="#cartModal">
-                    <span class="price">ر.س 0000.00</span>
-                    <i class="fas fa-shopping-basket" style="font-size: 20px" data-toggle="modal"
-                       data-target="#cartModal" value="5">
-                    </i>
-                </a>
-            </div>
-            <!-- menu -->
-            <div class="navbar-nav col-4 col-lg-8 order-lg-1 text-center p-0">
-                <!-- Toggle Button -->
-                <button class="toggle-collapse" type="button" id="toggle-button" onclick="showMenuFunction()">
-                    <i class="fa fa-bars fa-lg" id="toggle-icon"></i>
-                </button>
-                <div class="toggle-menu animate__animated  navbar-collapse justify-content-end" id="toggle-menu">
-                    <!-- Menu Items -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link text-light mr-4" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Art
-                            </a>
-                            <div class="dropdown-menu dropdown animate__animated  animate__fadeIn animate__fast"
-                                 aria-labelledby="navbarDropdown">
-                                <!-- This is from database Categories -->
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Visual
-                            </a>
-
-                            <div class="dropdown-menu animate__animated  animate__fadeIn animate__fast"
-                                 aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search Column -->
-    <div class="col-lg-5 col-sm-12 order-lg-0">
-        <!-- Search section -->
-        <form class="form-inline" action="{% url 'products:search'%}" method="GET">
-            <select class="select_search custom-select" id="inputGroupSelect01">
-                <!-- these options will be selected from Categories database -->
-                <option selected>All</option>
-                <option value="1">Hello</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <!-- Ajax Filtering on typing letters -->
-            <input name="q" type="search"  class="search_text form-control" placeholder="Search" />
-        </form>
-    </div>
-</nav>
-
-<!-- Mini cart summary section start  -->
 <div class="cart-info-base" id="cart-info-base">
     <!-- Cart information start  -->
         <div role="button" id="close-btn" class="close-btn" >
@@ -228,6 +137,9 @@
             <div class="row">
                 <div class="heading-title">
                     <h2>New Products</h2>
+                     <span class="mr-md-auto">
+                    Found <b>  {{ product_count}} </b> items
+                    </span>
                 </div>
                 <div class="new-product">
 
@@ -243,7 +155,7 @@
                                 </div>
                                 <div class="card-content text-center">
                                     <a href=" {{product.get_absolute_url}}">
-                                        <h2 class="product-title">{{ product.PRDName}}</h2>
+                                        <h2 class="product-title">{{ product}}</h2>
                                     </a>
                                     <div class="rating">
                                         <span><i class="fas fa-star"></i></span>
@@ -271,7 +183,7 @@
 
                     </ul>
 
-                    <a class="show-more-btn" href="#">Show More</a>
+                    <a class="show-more-btn" href="{% url 'products:all_pro' %}">Show More</a>
                 </div>
             </div>
         </div>

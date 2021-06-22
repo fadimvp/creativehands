@@ -10,6 +10,8 @@
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png" sizes="16x16">
     <!--    All css links start-->
     <!--   Animate css-->
+        <link rel="stylesheet" href="{% static 'css/woocommerce.min.css' %} ">
+
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <!--    AOS scrolling css -->
     <link rel="stylesheet" href="{% static 'css/aos2.3.4.css' %}">
@@ -25,6 +27,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
     <!--    Bootstrap css -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/woocommerce.min.css' %} ">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap.rtl.min.css"> -->
 
 
@@ -32,6 +35,106 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %} ">
     <!--    All css links end-->
 </head>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
+    <!-- Logo column -->
+    <div class="navbar-nav col-lg-2 col-sm-12 order-lg-1 text-center">
+        <a href="#" class="navbar-brand mx-auto"><img class="logo animate__animated  animate__fadeIn animate__slower"
+                                                      src="{% static 'images/logo.png' %}" width="80px" alt="" /></a>
+    </div>
+    <!-- Menu Column -->
+    <div class="navbar-nav col-lg-5 col-sm-12 order-lg-2" style="margin: 20px 0">
+        <div class="container-fluid p-0 justify-content-center">
+            <!-- Account -->
+            <div class="navbar-nav col-4 col-lg-1 order-lg-3 justify-content-center text-center p-0">
+                <a href="{% url 'auth:login' %}" class="nav-item">
+                    <i class="fas fa-user" style="font-size: 20px" data-toggle="modal" data-target="#cartModal"
+                       value="5">
+                    </i>
+                </a>
+            </div>
+            <!-- cart -->
+            <div class="navbar-nav col-4 col-lg-3 order-lg-2 justify-content-center text-center p-0 cart-info" id="cart-info">
+                <a href="#" class="nav-item " data-toggle="modal" data-target="#cartModal">
+                    <span class="price">ر.س 0000.00</span>
+                    <i class="fas fa-shopping-basket" style="font-size: 20px" data-toggle="modal"
+                       data-target="#cartModal" value="5">
+                    </i>
+                </a>
+            </div>
+            <!-- menu -->
+            <div class="navbar-nav col-4 col-lg-8 order-lg-1 text-center p-0">
+                <!-- Toggle Button -->
+                <button class="toggle-collapse" type="button" id="toggle-button" onclick="showMenuFunction()">
+                    <i class="fa fa-bars fa-lg" id="toggle-icon"></i>
+                </button>
+                <div class="toggle-menu animate__animated  navbar-collapse justify-content-end" id="toggle-menu">
+                    <!-- Menu Items -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link text-light mr-4" href="/">Home <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Art
+                            </a>
+                            <div class="dropdown-menu dropdown animate__animated  animate__fadeIn animate__fast"
+                                 aria-labelledby="navbarDropdown">
+                                <!-- This is from database Categories -->
+                                <a class="dropdown-item" href="#">Action</a>
+                                {% for category in links %}
+                                <a class="dropdown-item" href="{{ category.get_url}}">{{category}}</a>
+                                {% endfor %}
+
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Visual
+                            </a>
+
+                            <div class="dropdown-menu animate__animated  animate__fadeIn animate__fast"
+                                 aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Column -->
+    <div class="col-lg-5 col-sm-12 order-lg-0">
+        <!-- Search section -->
+        <form class="form-inline" action="{% url 'products:search' %}" method="GET" >
+            {% csrf_token %}
+            <select name="catid" id='query' class="select_search custom-select" id="inputGroupSelect01">
+                <!-- these options will be selected from Categories database -->
+                <option value="0">All</option>
+                  {%for dd in d %}
+                      <option value="{{ dd.id }}"> {{dd}} </option>
+                  {% endfor %}
+
+            </select>
+
+            <!-- Ajax Filtering on typing letters -->
+            <input name="query" id="'query" type="search"  class="search_text form-control" placeholder="Search" />
+        </form>
+        {{product_list}}
+
+
+
+    </div>
+</nav>
+
+<!-- Mini cart summary section start  -->
 {% block body %}
 
 {% endblock %}
@@ -47,7 +150,7 @@
                                     Get Started
                                 </h4>
                                 <div class="footer-menu">
-                                    <a href="index.html">Home</a>
+                                    <a href="/">Home</a>
                                     <a href="#">Categories</a>
                                     <a href="#">Sign Up</a>
                                 </div>
@@ -109,15 +212,21 @@
     </footer>
     <!-- Footer Section end  -->
 
+
+
 <!-- body bottom javascript start  -->
-<script  type="text/javascript"  src=" {% static 'js/jquery-1.11.3.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/fontawesome.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/aos2.3.4.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/wow.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/slick.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/fontawesome.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/aos2.3.4.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/wow.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/main.js' %}"></script>
+
+
+<!-- body bottom javascript end  -->
+
 
 
 <!-- body bottom javascript end  -->
