@@ -7,7 +7,7 @@
 
 <div class="cart-info-base" id="cart-info-base">
     <!-- Cart information start  -->
-        <div role="button" id="close-btn" class="close-btn" >
+    <div role="button" id="close-btn" class="close-btn">
         <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
     </div>
     <div class="card-info-wrap">
@@ -102,17 +102,18 @@
 <!-- Mini cart summary section end  -->
 
 <section class="body-wrapper"> <!-- Body Background section start -->
-<!-- Home Category section start  -->
+    <!-- Home Category section start  -->
     <section class="cateory-slider-section">
         <div class="container">
             <div class="row">
                 <div class="owl-carousel owl-category owl-theme">
-                {% for dd in d %}
+                    {% for dd in d %}
 
                     <div class="item">
                         <div class="col-xs-12 cat-card">
                             <div class="card">
-                                <a href="{{ dd.get_url }}"><img class="card-img-top" src="{{ dd.CATImg.url}} " alt="Wood Craft"></a>
+                                <a href="{{ dd.get_url }}"><img class="card-img-top" src="{{ dd.CATImg.url}} "
+                                                                alt="Wood Craft"></a>
                                 <div class="card-body">
 
                                     <a href="{{ dd.get_url }}">
@@ -124,11 +125,11 @@
                         </div>
 
                     </div>
-                                                                {% endfor %}
+                    {% endfor %}
 
 
+                </div>
             </div>
-        </div>
     </section>
     <!-- Produc category casouel section end  -->
     <!-- New Products section start  -->
@@ -137,21 +138,22 @@
             <div class="row">
                 <div class="heading-title">
                     <h2>New Products</h2>
-                     <span class="mr-md-auto">
+                    <span class="mr-md-auto">
                     Found <b>  {{ product_count}} </b> items
                     </span>
                 </div>
                 <div class="new-product">
 
                     <ul class="product-group">
-                                        {% for product in product_list%}
+                      {% for product in product_list%}
 
-                        <li>
+                         <li>
 
                             <div class="product-card">
 
                                 <div class="card-img">
-                                    <a href="#"><img class="img-fluid" src="{{product.PRDIMG.url }} " alt="product-title"></a>
+                                    <a href="#"><img class="img-fluid" src="{{product.PRDIMG.url }} "
+                                                     alt="product-title"></a>
                                 </div>
                                 <div class="card-content text-center">
                                     <a href=" {{product.get_absolute_url}}">
@@ -165,21 +167,27 @@
                                         <span><i class="fas fa-star-half-alt"></i></span>
                                     </div>
                                     <div class="price-group">
-                                            {%if product.PRDDisc > 0 %}
-                                            <del><span class="del-price-list">{{ product.PRDPrice}}  SR</span></del>
-                                             <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+                                        {%if product.PRDDisc > 0 %}
+                                        <del><span class="del-price-list">{{ product.PRDPrice}}  SR</span></del>
+                                        <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
 
-                                                     {% else %}
-                                             <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+                                            {% else %}
+                                            <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
 
-                                                </ins>
+                                            </ins>
                                             {% endif %}
+                                            {% if product.stock <= 0 %}
+
+                                            {% else %}
+
+                                            <div class="cart-btn"><a class="add-to-cart-btn"
+                                                                     href="{% url 'cart:add_cart' product.id %}">Add to
+                                                cart</a></div>
                                     </div>
-                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
                                 </div>
-                            </div>
-                        </li>
-                                            {% endfor %}
+                                {% endif %}
+                         </li>
+                        {% endfor %}
 
                     </ul>
 
@@ -196,17 +204,22 @@
                 <div class="heading-title">
                     <h2>Featured Products</h2>
                 </div>
+
                 <div class="new-product">
                     <ul class="product-group">
+                        {% for pro_list in product_featured %}
+
                         <li>
+
                             <div class="product-card">
+
                                 <div class="card-img">
-                                    <a href="#"><img class="img-fluid" src="{% static 'images/wicker.jpeg' %} "
-                                            alt="product-title"></a>
+                                    <a href="#"><img class="img-fluid" src="{{ pro_list.PRDIMG.url }} "
+                                                     alt="product-title"></a>
                                 </div>
                                 <div class="card-content text-center">
                                     <a href="#">
-                                        <h2 class="product-title">مبخر خشبي مع صندوق</h2>
+                                        <h2 class="product-title">{{pro_list.PRDName}}</h2>
                                     </a>
                                     <div class="rating">
                                         <span><i class="fas fa-star"></i></span>
@@ -216,12 +229,17 @@
                                         <span><i class="fas fa-star-half-alt"></i></span>
                                     </div>
                                     <div class="price-group">
-                                        <del><span class="price-amount amount">180.00 SR</span></del>
-                                        <ins><span class="price-amount amount">150.00 SR</span></ins>
+                                        <del><span class="price-amount amount">{{pro_list.PRDPrice }}</span></del>
+                                        <ins><span class="price-amount amount">{{pro_list.PRDDisc}}</span></ins>
                                     </div>
-                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                    {% if pro_list %}
+                                    <div class="cart-btn"><a class="add-to-cart-btn"
+                                                             href="{% url 'cart:add_cart' pro_list.id %}">Add to
+                                        cart</a></div>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% endfor %}
                         </li>
 
 
@@ -229,6 +247,7 @@
                     <a class="show-more-btn" href="#">Show More</a>
 
                 </div>
+
             </div>
         </div>
     </section>
@@ -240,43 +259,49 @@
                 <div class="heading-title">
                     <h2>Limited Products</h2>
                 </div>
+
+
                 <div class="new-product">
                     <ul class="product-group">
+                        {% for limited_pro in limited_products %}
+                        {% if limited_pro %}
 
 
-
-
-
-                        <li>
-                            <!-- onsale product start-->
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
-                                    <span class="onsale">Sale</span>
-                                </div>
-                                <div class="card-content text-center">
-                                    <a href="#">
-                                        <h2 class="product-title">مبخر خشبي</h2>
-                                    </a>
-                                    <div class="rating">
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star-half-alt"></i></span>
+                            <li>
+                                <!-- onsale product start-->
+                                <div class="product-card">
+                                    <div class="card-img">
+                                        <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} "
+                                                         alt="product-title"></a>
+                                        <span class="onsale">Sale</span>
                                     </div>
-                                    <div class="price-group">
-                                        <ins><span class="price-amount amount">150.00 SR</span></ins>
-                                    </div>
-                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
-                                </div>
-                            </div>
-                            <!-- onsale product end-->
-                        </li>
 
+                                    <div class="card-content text-center">
+                                        <a href="#">
+                                            <h2 class="product-title"> {{limited_pro.PRDName}}</h2>
+                                        </a>
+                                        <div class="rating">
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star-half-alt"></i></span>
+                                        </div>
+
+                                        <div class="price-group">
+                                            <ins><span class="price-amount amount">{{limited_pro.PRDPrice}}</span></ins>
+                                        </div>
+                                        <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                    </div>
+                                </div>
+                                <!-- onsale product end-->
+                            </li>
+                        {% endif %}
+                        {% endfor %}
                     </ul>
                     <a class="show-more-btn" href="#">Show More</a>
                 </div>
+
             </div>
         </div>
     </section>

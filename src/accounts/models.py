@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.utils.ipv6 import is_valid_ipv6_address
-
 
 class MyAccountManger(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):

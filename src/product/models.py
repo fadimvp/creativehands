@@ -7,7 +7,6 @@ from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.text import slugify
 # Create your models here.
-from docutils.parsers.rst.directives.admonitions import Note
 
 User = settings.AUTH_USER_MODEL
 
@@ -25,6 +24,7 @@ class Product(models.Model):
     # objects =ProductManger()
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     PRDName = models.CharField(max_length=75)
+    PRDVandor_Name = models.CharField(max_length=75)
     PRDCategory = models.ForeignKey('Category', on_delete=models.CASCADE, blank=True, null=True)
     PRDIMG = models.ImageField(upload_to='', blank=True, null=True)
     PRDDec = models.TextField(max_length=500)
@@ -37,6 +37,7 @@ class Product(models.Model):
     PRDISNew = models.BooleanField(default=False)
     PRDISbest = models.BooleanField(default=False)
     stock = models.IntegerField(default=0)
+    tax = models.DecimalField(max_digits=2,decimal_places=2,default=0.05)
 
     # Additional data
     on_sale = models.BooleanField(default=False)
@@ -47,6 +48,8 @@ class Product(models.Model):
     # admin data
     approved = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
+    limited_products = models.BooleanField(default=False)
+
     added_date = models.DateTimeField(auto_now_add=True, null=True)
     update_date = models.DateTimeField(auto_now_add=True, null=True)
 
@@ -65,10 +68,10 @@ class Product(models.Model):
         def save(self, *args, **kwargs):
 
             if not self.PRDSlug:
-                self.PRDSlug = slugify(self.PRDName)
+                self.PRDSlug = slugify(self.PRDVandor_Name)
 
                 if not self.PRDSlug:
-                    self.PRDSlug = self.arabic_slugify(self.PRDName)
+                    self.PRDSlug = self.arabic_slugify(self.PRDVandor_Name)
 
         super(Product, self).save(*args, **kwargs)
 
@@ -78,7 +81,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
 
         if not self.PRDSlug:
-            self.PRDSlug = slugify(self.PRDName)
+            self.PRDSlug = slugify(self.PRDVandor_Name)
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
