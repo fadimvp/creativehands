@@ -8,8 +8,19 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('CATName', 'slug')
 
 
-admin.site.register(Product)
-admin.site.register(Varation)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("id", 'user', "PRDName", "PRDPrice", "PRDDisc", "PRDCost", "stock", "PRDCreated", "PRDIMG")
+    list_display_links = ("id", 'user', "PRDName", "PRDPrice", "PRDDisc",)
+    search_fields = ("PRDName", "user")
+    list_editable = ('stock',)
+
+
+class VarationAdmin(admin.ModelAdmin):
+    list_display = ('id','product', 'variation_category','variation_vale','is_active',)
+
+
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Varation,VarationAdmin)
 admin.site.register(Product_Img)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Alternative)

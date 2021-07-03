@@ -3,108 +3,16 @@
 {% block body %}
 
 <body class="body-class">
-<!-- Mini cart summary section start  -->
-<div class="cart-info-base" id="cart-info-base">
-    <!-- Cart information start  -->
-    <div role="button" id="close-btn" class="close-btn">
-        <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
-    </div>
-    <div class="card-info-wrap">
-        <div class="cart-info-itmes border-bt">
-            <!-- Items list start start  -->
-            <div class="cart-info-img">
-                <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
-            </div>
-            <div class="cart-info-content">
-                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
-                <dl>
-                    <dt class="sold-by">Sold By:</dt>
-                    <dd class="shop-name">
-                        Wahed Nur
-                    </dd>
-                </dl>
-                <span class="qty-price">1 x <span class="price">
-                        <bdi>
-                            8000.00
-                        </bdi> SR
-                    </span></span>
-            </div>
-            <div class="cart-info-item-remove">
-                <a href="#"><i class="fas fa-times"></i></a>
-            </div>
-        </div> <!-- Items list start end  -->
-        <div class="cart-info-itmes border-bt">
-            <!-- Items list start start  -->
-            <div class="cart-info-img">
-                <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
-            </div>
-            <div class="cart-info-content">
-                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
-                <dl>
-                    <dt class="sold-by">Sold By:</dt>
-                    <dd class="shop-name">
-                        Wahed Nur
-                    </dd>
-                </dl>
-                <span class="qty-price">1 x <span class="price">
-                        <bdi>
-                            8000.00
-                        </bdi> SR
-                    </span></span>
-            </div>
-            <div class="cart-info-item-remove">
-                <a href="#"><i class="fas fa-times"></i></a>
-            </div>
-        </div> <!-- Items list start end  -->
-        <div class="cart-info-itmes border-bt">
-            <!-- Items list start start  -->
-            <div class="cart-info-img">
-                <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
-            </div>
-            <div class="cart-info-content">
-                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
-                <dl>
-                    <dt class="sold-by">Sold By:</dt>
-                    <dd class="shop-name">
-                        Wahed Nur
-                    </dd>
-                </dl>
-                <span class="qty-price">1 x <span class="price">
-                        <bdi>
-                            8000.00
-                        </bdi> SR
-                    </span></span>
-            </div>
-            <div class="cart-info-item-remove">
-                <a href="#"><i class="fas fa-times"></i></a>
-            </div>
-        </div> <!-- Items list start end  -->
-    </div>
-    <!-- Cart information end  -->
-    <!-- Price information -->
-    <div class="cart-info-price">
-        <strong>Subtotal: </strong>
-        <span class="cart-info-subtotal">
-            <bdi>
-                18000.99 
-                <span class="cart-info-currency-symbol">
-                    SR
-                </span>
-            </bdi>
-        </span>
-    </div>
-    <div class="cart-info-button btn-group">
-        <a class="info-view-cart info-btn" href="#">View cart</a>
-        <a class="info-checkout info-btn" href="#">Checkout</a>
-    </div>
-</div>
-<!-- Mini cart summary section end  -->
+
 
 <!-- Sigle product page section start -->
 <div class="emty-50"></div>
 <section class="sigle-product">
+        <form action="{% url 'cart:add_cart' pro_detail.id %}" method="POST">
+            {% csrf_token%}
+
     <div class="container">
-        <div class="row">
+    <div class="row">
             <div class="col-md-6">
                 <!-- Product image section start -->
                 <div class="product-image-section">
@@ -154,7 +62,7 @@
                         {% endif %}
 
                     </div>
-                 {% if  pro_detail.stock <= 0 %}
+                    {% if  pro_detail.stock <= 0 %}
 
 
 
@@ -164,127 +72,154 @@
                     <h5> Out Of Stock </h5>
 
 
-                 {% else %}
-                {% if in_cart %}
+                    {% else %}
+                    {% if in_cart %}
 
 
-                        <!--  added cart  -->
+                    <!--  added cart  -->
 
-                            <div class="quantity mb-5 mt-5">
-                                <label for="quantity" class="d-none"> طارة التطريز</label>
+                    <div class="quantity mb-5 mt-5">
+                        <label for="quantity" class="d-none"> طارة التطريز</label>
+
+                        <input type="number" id="quantity" title="Qty" step="1" min="1" max="4" name="quantity"
+                               value="1" placeholder="" inputmode="numeric" size="4">
+
+
+
+
+
+
+
+
+
+
+                        <a href="{% url 'cart:add_cart' pro_detail.id %}" class="btn btn-success ml-3 mt-5"><i class="fas fa-check"></i> <span class="buy-btn">Added cart</span></a>
+                        <button type="submit" href="{% url 'cart:cart_item' %}" class="btn btn-outline-primary ml-3 mt-5"><i class="fas fa-eye"></i> <span class="buy-btn">View Cart </span></button>
+                        {% else %}
+
+                        <div class="add-card-section input-group">
+                            <div class="quantity">
+                                <label for="quantity" class="d-none">حامل طارة التطريز</label>
+
 
                                 <input type="number" id="quantity" title="Qty" step="1" min="1" max="4" name="quantity"
-                                  value="1" placeholder="" inputmode="numeric" size="4">
+                                       value="1" placeholder="" inputmode="numeric" size="4">
 
                             </div>
+                            <div class="add-to-cart-btn">
 
 
-                               <a class="btn btn-success ml-3 mt-5"><i class="fas fa-check"></i> <span class="buy-btn">Added cart</span></a>
-                               <a href="{% url 'cart:cart_item' %}" class="btn btn-outline-primary ml-3 mt-5"><i class="fas fa-eye"></i> <span class="buy-btn">View Cart </span></a>
-                {% else %}
+                                    <button type="submit" class="buy-now-btn"><i class="fas fa-shopping-cart"></i> <span class="buy-btn">Buy Now</span></button>
 
-                    <div class="add-card-section input-group">
-                        <div class="quantity">
-                            <label for="quantity" class="d-none">حامل طارة التطريز</label>
+                                    <div class="item-option-select">
+                                        <h6> choose color  </h6>
+                                        <select  name="color" >
+                                     <option class="form-control"  value="" disabled selected>Choose Color  </option>
+                                            {% for ff in pro_detail.varation_set.colors %}
+                                            <option  value="{{ff.variation_vale}}"> {{ ff.variation_vale}} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
 
-                            <input type="number" id="quantity" title="Qty" step="1" min="1" max="4" name="quantity"
-                              value="1" placeholder="" inputmode="numeric" size="4">
+                                    <div class="item-option-select">
+                                        <h6> choose size  </h6>
+                                        <select  name="size">
+                                       {% for ff in pro_detail.varation_set.sizes %}
+                                            <option  class="form-control" value="{{ff.variation_vale}}"> {{ ff.variation_vale}} </option>
+                                       {% endfor %}
+                                        </select>
+                                    </div>
+                                    {% endif %}
 
+                                    {% endif %}
+
+                            </div>
                         </div>
-                        <div class="add-to-cart-btn">
-                            <a href="{% url 'cart:add_cart' pro_detail.id %}">
+                        <div class="vindor-info"><h4>kahraman</h4></div>
+                        <p>اعمال يدوية متنوعة ( اعمال بالخشب, كروشية , خياطة ) </p>
+                        <p><a href="#">More Products from kahraman </a></p>
 
-                           <button class="buy-now-btn"><i class="fas fa-shopping-cart"></i> <span class="buy-btn">Buy Now</span></button>
-                                  {% endif %}
 
-                 {% endif %}
-                            </a>
-                        </div>
                     </div>
-                    <div class="vindor-info"><h4>kahraman</h4></div>
-                    <p>اعمال يدوية متنوعة ( اعمال بالخشب, كروشية , خياطة ) </p>
-                    <p><a href="#">More Products from kahraman </a></p>
-
-
                 </div>
             </div>
-        </div>
-        <!-- Product description section start -->
-        <div class="row">
-            <div class="product-description container">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-description"
-                           role="tab" aria-controls="nav-description" aria-selected="true">Description</a>
-                        <a class="nav-link" id="nav-vendor-tab" data-toggle="tab" href="#nav-vendor" role="tab"
-                           aria-controls="nav-vendor" aria-selected="false">البائع</a>
-                        <a class="nav-link" id="nav-review-tab" data-toggle="tab" href="#nav-review" role="tab"
-                           aria-controls="nav-review" aria-selected="false">Reviews (0)</a>
-                        <a class="nav-link" id="nav-qaa-tab" data-toggle="tab" href="#nav-qaa" role="tab"
-                           aria-controls="nav-qaa" aria-selected="false">Questions and Answers</a>
-                        <a class="nav-link" id="nav-more-tab" data-toggle="tab" href="#nav-more" role="tab"
-                           aria-controls="nav-more" aria-selected="false">More Offers</a>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
-                         aria-labelledby="nav-description-tab">
-                        <p>حامل طارة التطريز _ بني متوسط</p>
-                        <p>أمكانية التحكم بالأرتفاع المناسب</p>
-                        <p>التفاف بدرجة 360</p>
-                        <p>مقابض اغلاق</p>
-                        <p>مصنوع من الخشب السويدي</p>
-                        <p>المقاسات :</p>
-                        <p>الأرتفاع : 15 سم</p>
-                        <p>القاعدة : الطول 34 سم , العرض: 20 سم</p>
-                        <p>طول الذراع 35 سم</p>
-                        <p>حامل الطارة بعرض 15 سم </p>
-                    </div>
-                    <div class="tab-pane fade" id="nav-vendor" role="tabpanel" aria-labelledby="nav-vendor-tab">
-                        <div class="row">
-                            <h2 class="product-vendor">
-                                kahraman
-                            </h2>
-                            <div class="rev-left text-left">
-                                <div class="review-star">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+            <!-- Product description section start -->
+            <div class="row">
+                <div class="product-description container">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-description"
+                               role="tab" aria-controls="nav-description" aria-selected="true">Description</a>
+                            <a class="nav-link" id="nav-vendor-tab" data-toggle="tab" href="#nav-vendor" role="tab"
+                               aria-controls="nav-vendor" aria-selected="false">البائع</a>
+                            <a class="nav-link" id="nav-review-tab" data-toggle="tab" href="#nav-review" role="tab"
+                               aria-controls="nav-review" aria-selected="false">Reviews (0)</a>
+                            <a class="nav-link" id="nav-qaa-tab" data-toggle="tab" href="#nav-qaa" role="tab"
+                               aria-controls="nav-qaa" aria-selected="false">Questions and Answers</a>
+                            <a class="nav-link" id="nav-more-tab" data-toggle="tab" href="#nav-more" role="tab"
+                               aria-controls="nav-more" aria-selected="false">More Offers</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
+                             aria-labelledby="nav-description-tab">
+                            <p>حامل طارة التطريز _ بني متوسط</p>
+                            <p>أمكانية التحكم بالأرتفاع المناسب</p>
+                            <p>التفاف بدرجة 360</p>
+                            <p>مقابض اغلاق</p>
+                            <p>مصنوع من الخشب السويدي</p>
+                            <p>المقاسات :</p>
+                            <p>الأرتفاع : 15 سم</p>
+                            <p>القاعدة : الطول 34 سم , العرض: 20 سم</p>
+                            <p>طول الذراع 35 سم</p>
+                            <p>حامل الطارة بعرض 15 سم </p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-vendor" role="tabpanel" aria-labelledby="nav-vendor-tab">
+                            <div class="row">
+                                <h2 class="product-vendor">
+                                    kahraman
+                                </h2>
+                                <div class="rev-left text-left">
+                                    <div class="review-star">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a class="vendor-rev-link" href="#">5 Stars out of based on 1 Review</a>
                                 </div>
-                                <a class="vendor-rev-link" href="#">5 Stars out of based on 1 Review</a>
-                            </div>
-                            <div class="rev-center text-center">
-                                <p>اعمال يدوية متنوعة ( اعمال بالخشب, كروشية , خياطة )</p>
-                                <p><a href="#">More Products from kahraman</a></p>
+                                <div class="rev-center text-center">
+                                    <p>اعمال يدوية متنوعة ( اعمال بالخشب, كروشية , خياطة )</p>
+                                    <p><a href="#">More Products from kahraman</a></p>
 
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
-                        <div class="rev-title">
-                            Reviews
+                        <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                            <div class="rev-title">
+                                Reviews
+                            </div>
+                            <p>There are no reviews yet.</p>
+                            <p>Only logged in customers who have purchased this product may leave a review.</p>
                         </div>
-                        <p>There are no reviews yet.</p>
-                        <p>Only logged in customers who have purchased this product may leave a review.</p>
-                    </div>
-                    <div class="tab-pane fade" id="nav-qaa" role="tabpanel" aria-labelledby="nav-qaa-tab">
-                        <h2 class="qan-title">
-                            Questions and Answers
-                        </h2>
-                        <input type="text" class="qna form-control" placeholder="Have a question? Search for answer">
-                    </div>
-                    <div class="tab-pane fade" id="nav-more" role="tabpanel" aria-labelledby="nav-more-tab">
-                        <p>Sorry no more offers available</p>
+                        <div class="tab-pane fade" id="nav-qaa" role="tabpanel" aria-labelledby="nav-qaa-tab">
+                            <h2 class="qan-title">
+                                Questions and Answers
+                            </h2>
+                            <input type="text" class="qna form-control" placeholder="Have a question? Search for answer">
+                        </div>
+                        <div class="tab-pane fade" id="nav-more" role="tabpanel" aria-labelledby="nav-more-tab">
+                            <p>Sorry no more offers available</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- Product description section end -->
         </div>
-        <!-- Product description section end -->
-    </div>
+        </form>
 </section>
 <!-- Sigle product page section end -->
 

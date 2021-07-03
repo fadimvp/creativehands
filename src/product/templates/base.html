@@ -58,7 +58,8 @@
                 <a href="#" class="nav-item " data-toggle="modal" data-target="#cartModal">
                     <span class="price ml-5">{{cart_count}}</span>
                     <br>
-                    <span class="price">ر.س 0000.00</span>
+                    <span class="price">  {{ total_tex |floatformat:1 }}
+  </span>
                     <i class="fas fa-shopping-basket" style="font-size: 20px" data-toggle="modal"
                        data-target="#cartModal" value="5">
                     </i>
@@ -137,6 +138,57 @@
 </nav>
 
 <!-- Mini cart summary section start  -->
+<!-- Mini cart summary section start  -->
+<div class="cart-info-base" id="cart-info-base">
+    <!-- Cart information start  -->
+    <div role="button" id="close-btn" class="close-btn">
+        <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
+    </div>
+    <div class="card-info-wrap">
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+
+    </div>
+    <!-- Cart information end  -->
+    <!-- Price information -->
+    <div class="cart-info-price">
+        <strong>Subtotal: </strong>
+        <span class="cart-info-subtotal">
+            <bdi>
+                                                         {{ total_tex |floatformat:1 }}
+                <span class="cart-info-currency-symbol">
+                    SR
+                </span>
+            </bdi>
+        </span>
+    </div>
+    <div class="cart-info-button btn-group">
+        <a class="info-view-cart info-btn" href="#">View cart</a>
+        <a class="info-checkout info-btn" href="#">Checkout</a>
+    </div>
+</div>
+<!-- Mini cart summary section end  -->
 {% block body %}
 
 {% endblock %}

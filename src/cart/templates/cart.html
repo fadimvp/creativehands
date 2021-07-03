@@ -155,12 +155,13 @@
 
                            <td>
                                <a href="{% url 'cart:remove_cart' item.product.id %}" > <span class="mr-5"> - </span> </a>
-                               <a href="{% url 'cart:add_cart' item.product.id %}"><input class="qty-box" type="number" title="qty" min="0" max="5" size="6" placeholder="" value="{{ item.quantity}}" inputmode="numeric"></a>
+                               <a href="{% url 'cart:add_cart' item.product.id %}"><input name="qty" class="qty-box" type="number" title="qty" min="0" max="5" size="6" placeholder="" value="{{ item.quantity}}" inputmode="numeric"></a>
                            </td>
-                          <td>
+
+                              <td>
                                <span class="sub-total">
                                    <bdi>
-                                       {{ item.sub_total |floatformat:0}} SR
+                                       {{ total | floatformat:0}} SR
                                        <span class="price-simbole"></span>
                                    </bdi>
                                </span>
@@ -182,6 +183,7 @@
 
 
                     </tbody>
+
                     {% endfor %}
                 </table>
             </div>

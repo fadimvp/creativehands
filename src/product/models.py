@@ -6,6 +6,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.text import slugify
+
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
@@ -37,7 +38,7 @@ class Product(models.Model):
     PRDISNew = models.BooleanField(default=False)
     PRDISbest = models.BooleanField(default=False)
     stock = models.IntegerField(default=0)
-    tax = models.DecimalField(max_digits=2,decimal_places=2,default=0.05)
+    tax = models.DecimalField(max_digits=2, decimal_places=2, default=0.05)
 
     # Additional data
     on_sale = models.BooleanField(default=False)
@@ -88,11 +89,27 @@ class Product(models.Model):
         return reverse('products:pro_detail', kwargs={"slug": self.PRDSlug})
 
 
+var_category_choice = (
+    ("color", "color"),
+    ("size","size"),
+
+)
+
+class VarationManger(models.Manager):
+    def colors(self):
+        return super(VarationManger,self).filter(variation_category='color',is_active=True)
+    def sizes (self):
+        return super(VarationManger,self).filter(variation_category='size',is_active=True)
 class Varation(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    PRDName = models.CharField(max_length=75)
+    variation_category = models.CharField(max_length=100, choices=var_category_choice)
+    variation_vale = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    create_date = models.DateTimeField(auto_now=True)
+    object_varations = VarationManger()
+    def __str__(self):
+        return self.product
 
-    PRDIMG = models.ImageField(upload_to='', blank=True, null=True)
 
     def __str__(self):
         return str(self.product)
