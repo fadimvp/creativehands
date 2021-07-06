@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'product',
     'settings',
+    'account',
      'users',
-    'accounts',
     'django_filters',
     'cart',
     
@@ -81,7 +81,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'account.Account'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

@@ -100,19 +100,18 @@ class VarationManger(models.Manager):
         return super(VarationManger,self).filter(variation_category='color',is_active=True)
     def sizes (self):
         return super(VarationManger,self).filter(variation_category='size',is_active=True)
-class Varation(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+class Variation(models.Model):
+    product = models.ForeignKey(Product,blank=True,on_delete=models.CASCADE)
     variation_category = models.CharField(max_length=100, choices=var_category_choice)
     variation_vale = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now=True)
-    object_varations = VarationManger()
+    objects = VarationManger()
     def __str__(self):
-        return self.product
+        return str(self.variation_vale)
 
 
-    def __str__(self):
-        return str(self.product)
 
     def get_absolute_url(self):
         return self.product.get_absolute_url()

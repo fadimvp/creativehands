@@ -91,7 +91,7 @@
         <strong>Subtotal: </strong>
         <span class="cart-info-subtotal">
             <bdi>
-                18000.99 
+                18000.99
                 <span class="cart-info-currency-symbol">
                     SR
                 </span>
@@ -134,14 +134,15 @@
                     {% for item in cart_items %}
                     <tbody>
                        <tr>
-                           <td><a href="{% url 'cart:remove_cart_item' item.product.id %}" class="remove"> <i class="fal fa-times-circle"></i></a></td>
+                           <td><a href="{% url 'cart:remove_cart_item' item.product.id item.id %}" class="remove"> <i class="fal fa-times-circle"></i></a></td>
                            <td class="product-img m-none"><a href=""><img class="img-fluid" src="{{ item.product.PRDIMG.url}}" alt=""></a></td>
                            <td>
                                <a href="{{ item.product.get_absolute_url}}" class="product-title">
                                    {{ item }}                               </a>
                                <dl class="variation">
-                                   <dt class="sold-by">Sold By:</dt>
-                                   <dl class="shop-name">Wahed Nur</dl>
+                                   {% for items in item.variations.all %}
+                                   <dt class="sold-by">{{ items.variation_category}}: {{items.variation_vale}}</dt>
+{% endfor %}
                                </dl>
                            </td>
                            <td>
@@ -151,12 +152,33 @@
                                        SR
                                    </span>
                                </span>
+
+
+                 <td>
+
+<div class="col">
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+                               <a href="{% url 'cart:remove_cart' item.product.id item.id %}" > <span class="mr-5"><i class="fa fa-minus"></i>  </span> </a>
+                               <form action="{% url 'cart:add_cart' item.product.id %}" method="POST">
+
+                                   {%csrf_token%}
+                                   {% for items in item.variations.all %}
+                                   <input type="hidden" name="{{items.variation_category}}" value="{{items.variation_vale}}">
+
+                                   {%endfor %}
+                                  <input class="to" type="text" value="{{item.quantity}}" title="qty" min="0" max="5" size="6" placeholder="" inputmode="numeric">
+
+                                <button type="submit" value="v"><input type="hidden"><i class="fa fa-plus" aria-hidden="true"></i>
+ </button>
+                               </form>
+                                        </div>
+</div>
+
                            </td>
 
-                           <td>
-                               <a href="{% url 'cart:remove_cart' item.product.id %}" > <span class="mr-5"> - </span> </a>
-                               <a href="{% url 'cart:add_cart' item.product.id %}"><input name="qty" class="qty-box" type="number" title="qty" min="0" max="5" size="6" placeholder="" value="{{ item.quantity}}" inputmode="numeric"></a>
-                           </td>
 
                               <td>
                                <span class="sub-total">
@@ -255,14 +277,14 @@
                                     <a href="#" class="process-checkout-btn">Proceed to checkout</a>
                                 </td>
                             </tr>
-                            
+
                         </tbody>
                     </table>
-                    
+
                </div>
                </div>
             </div>
-            
+
         </div>
         {% endif %}
     </div>

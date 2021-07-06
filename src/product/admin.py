@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Product_Img, Category, Alternative, Product_Accessories, Varation
+from .models import Product, Product_Img, Category,Variation, Alternative, Product_Accessories
 
 
 # Register your models here.
@@ -15,12 +15,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ('stock',)
 
 
-class VarationAdmin(admin.ModelAdmin):
-    list_display = ('id','product', 'variation_category','variation_vale','is_active',)
 
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Varation,VarationAdmin)
+admin.site.register(Variation)
 admin.site.register(Product_Img)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Alternative)

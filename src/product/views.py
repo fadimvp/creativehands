@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.http import HttpResponse
 # Create your views here.
-from .models import Product, Category
+from .models import Product, Category,Variation
 from django.core.paginator import Paginator
 from .models import Category
 from .forms import SearchForm
