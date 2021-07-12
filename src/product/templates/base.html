@@ -36,7 +36,7 @@
     <!--    All css links end-->
 </head>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
+<nav class="navbar navbar-expand-lg navbar-dark bg-brand pr-5">
     <!-- Logo column -->
     <div class="navbar-nav col-lg-2 col-sm-12 order-lg-1 text-center">
         <a href="#" class="navbar-brand mx-auto"><img class="logo animate__animated  animate__fadeIn animate__slower"
@@ -46,17 +46,26 @@
     <div class="navbar-nav col-lg-5 col-sm-12 order-lg-2" style="margin: 20px 0">
         <div class="container-fluid p-0 justify-content-center">
             <!-- Account -->
-            <div class="navbar-nav col-4 col-lg-1 order-lg-3 justify-content-center text-center p-0">
-                <a href="{% url 'auth:login' %}" class="nav-item">
-                    <i class="fas fa-user" style="font-size: 20px" data-toggle="modal" data-target="#cartModal"
+            <div class="navbar-nav col-4 col-lg-1 order-lg-3 justify-content-center text-center ">
+                <a href="{% url 'account:register' %}" class="nav-item">
+                    <i class="fas fa-user " style="font-size: 20px" data-toggle="modal" data-target="#cartModal"
                        value="5">
+
                     </i>
                 </a>
+
+
+
+                    <span class="price mr-4"> welcome: {{ user.username}}</span>
+
             </div>
+
+
+
             <!-- cart -->
-            <div class="navbar-nav col-4 col-lg-3 order-lg-2 justify-content-center text-center p-0 cart-info" id="cart-info">
-                <a href="#" class="nav-item " data-toggle="modal" data-target="#cartModal">
-                    <span class="price ml-5">{{cart_count}}</span>
+            <div class="navbar-nav col-4 col-lg-3 order-lg-2 justify-content-center text-center p-0 cart-info " id="cart-info">
+                <a href="{% url 'cart:checkout'%}" class="nav-item " data-toggle="modal" data-target="#cartModal">
+                    <span class="price  ">{{cart_count}}</span>
                     <br>
                     <span class="price">  {{ total_tex |floatformat:1 }}
   </span>
@@ -66,20 +75,20 @@
                 </a>
             </div>
             <!-- menu -->
-            <div class="navbar-nav col-4 col-lg-8 order-lg-1 text-center p-0">
+            <div class="navbar-nav col-4 col-lg-8 order-lg-1 text-center p-0 ">
                 <!-- Toggle Button -->
                 <button class="toggle-collapse" type="button" id="toggle-button" onclick="showMenuFunction()">
                     <i class="fa fa-bars fa-lg" id="toggle-icon"></i>
                 </button>
-                <div class="toggle-menu animate__animated  navbar-collapse justify-content-end" id="toggle-menu">
+                <div class="toggle-menu animate__animated  navbar-collapse justify-content-end mr-4" id="toggle-menu">
                     <!-- Menu Items -->
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-5">
                         <li class="nav-item active">
-                            <a class="nav-link text-light mr-4" href="/">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link text-light " href="/">Home <span class="sr-only">(current)</span></a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Art
                             </a>
@@ -107,7 +116,17 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
+
                         </li>
+
+                            <li class="nav-item ">
+                                {% if user.id is not None%}
+                                <a class="nav-link " href="/">profile <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link  " href="/">DashBoard <span class="sr-only">(current)</span></a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -184,11 +203,14 @@
         </span>
     </div>
     <div class="cart-info-button btn-group">
-        <a class="info-view-cart info-btn" href="#">View cart</a>
-        <a class="info-checkout info-btn" href="#">Checkout</a>
+        <a class="info-view-cart info-btn" href="{% url 'cart:cart_item' %}">View cart</a>
+        <a class="info-checkout info-btn" href="{% url 'cart:checkout' %}">Checkout</a>
     </div>
 </div>
 <!-- Mini cart summary section end  -->
+  {% if messages %}
+                        {% include 'alert.html' %}
+                        {% endif %}
 {% block body %}
 
 {% endblock %}

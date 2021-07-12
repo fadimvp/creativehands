@@ -74,7 +74,8 @@ class Product(models.Model):
                 if not self.PRDSlug:
                     self.PRDSlug = self.arabic_slugify(self.PRDVandor_Name)
 
-        super(Product, self).save(*args, **kwargs)
+            super(Product, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return self.PRDName

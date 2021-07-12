@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 class MyAccountManger(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
         if not email:
@@ -41,6 +42,8 @@ class Account(AbstractBaseUser):
     username = models.CharField(max_length=50, unique=True)
     email = models.CharField(max_length=50, unique=True)
     phone_number = models.CharField(max_length=50)
+
+
 
     # required
 

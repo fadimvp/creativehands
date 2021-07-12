@@ -118,3 +118,7 @@ stcBtn.addEventListener('click', () => {
   codDiv.classList.remove('active');
   stcDiv.classList.add('active');
 })
+
+setTimeout(function(){
+  $('#message').fadeOut('slow')
+},4000)

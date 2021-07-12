@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.http import HttpResponse
 # Create your views here.
-from .models import Product, Category,Variation
+from .models import Product, Category, Variation
 from django.core.paginator import Paginator
 from .models import Category
 from .forms import SearchForm
@@ -15,24 +15,33 @@ from django.db.models import Q
 
 # Display  all products  and counts on Home page and category all
 def Product_list(request):
-    product_list = Product.objects.filter(approved=True).order_by('id')  # Display  all products if you check in approved
-    product_featured = Product.objects.filter(featured=True)  # Display  all products if you check in product_featured
-    limited_products = Product.objects.filter(limited_products=True)
-    product_count = product_list.count()  # count all products
-    d = Category.objects.all()  # display all category on home page
-    # paginator
-    paginator = Paginator(product_list, 6)  # product_list == how many products  display on one page
-    page_number = request.GET.get('page')  # get number data
-    product_list = paginator.get_page(page_number)
 
-    context = {
-        'product_list': product_list,
-        'product_count': product_count,
-        'product_featured': product_featured,
-        'limited_products': limited_products,
-        'd': d
-    }
-    return render(request, 'product/product_list.html', context)
+
+
+            product_list = Product.objects.filter(approved=True).order_by(
+            'id')  # Display  all products if you check in approved
+
+            product_featured = Product.objects.filter(
+            Q(featured=True) & Q(approved=True))  # Display  all products if you check in product_featured
+            limited_products = Product.objects.filter(limited_products=True)
+
+
+            product_count = product_list.count()  # count all products
+            d = Category.objects.all()  # display all category on home page
+            # paginator
+            paginator = Paginator(product_list, 6)  # product_list == how many products  display on one page
+            page_number = request.GET.get('page')  # get number data
+            product_list = paginator.get_page(page_number)
+
+
+            context = {
+                            'product_list': product_list,
+                            'product_count': product_count,
+                            'product_featured': product_featured,
+                            'limited_products': limited_products,
+                            'd': d,
+                        }
+            return render(request, 'product/product_list.html', context)
 
 
 # if you selected show more display all products on home page

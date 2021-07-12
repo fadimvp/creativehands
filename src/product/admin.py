@@ -15,10 +15,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ('stock',)
 
 
+class VariationAdmin(admin.ModelAdmin):
+    list_display = ['product','variation_category','variation_vale','is_active']
+    list_editable = ('is_active',)
 
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Variation)
+admin.site.register(Variation,VariationAdmin)
 admin.site.register(Product_Img)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Alternative)
