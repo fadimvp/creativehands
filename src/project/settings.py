@@ -42,6 +42,7 @@ INSTALLED_APPS = [
      'users',
     'django_filters',
     'cart',
+    'orders',
     
 
 

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-{% extends 'base.html' %}
+{% extends 'product/base.html' %}
 <html lang="en">
 
 <body class="body-class">
@@ -221,7 +221,7 @@
                             <tr class="checout-total">
                                 <strong>
                                     <td>
-                                    <strong>Subtotal</strong>
+                                    <strong>tax</strong>
                                     </td>
                                      <td>
                                     <bdi>
@@ -243,7 +243,7 @@
                                     </td>
                                      <td>
                                     <bdi>
-                                         {{ total |floatformat:0 }}
+                                         {{ a |floatformat:0 }}eee
                                         <span class="currency-symbol">
                                             SR
                                         </span>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
+{% extends 'product/base.html' %}
 {% load static %}
 {% block body %}
 
@@ -11,6 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="owl-carousel owl-category owl-theme">
+                    {{cart_count}} or{{quantity}}
                     {% for dd in d %}
 
                     <div class="item">

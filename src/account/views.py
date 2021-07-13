@@ -16,8 +16,7 @@ from cart.views import _cart_id
 # Create your views here.
 from django.contrib import messages, auth
 from django.contrib.auth import authenticate
-
-
+import requests
 def register(request):
     if request.method == 'POST':
         form1 = RegistertionForm(request.POST)
@@ -76,37 +75,51 @@ def Login(request):
 
                 if is_cart_item_exists:
                     cart_item = CartItems.objects.filter(cart=cart)
-                    #get the product variations by cart id
                     product_variation = []
+                    # get  product variations by  cart id
                     for item in cart_item:
                         variation = item.variations.all()
                         product_variation.append(list(variation))
-                    # get the items from the user   to access his product variations
-                    # product = Product.objects.get(id=product_id)
-                    # cart_item = CartItems.objects.filter(product=product, user=current_user)
-                    # ex_var_list = []
-                    # id = []
-                    # for item in cart_item:
-                    #     exists_variation = item.variations.all()
-                    #     ex_var_list.append(list(exists_variation))
-                    #     id.append(item.id)
 
+                        # Get the cart from user
+                        cart_item = CartItems.objects.filter( user=user)
+                        ex_var_list = []
+                        id = []
+                        for item in cart_item:
+                            exists_variation = item.variations.all()
+                            ex_var_list.append(list(exists_variation))
+                            id.append(item.id)
+                        for pr in product_variation:
+                            if pr in ex_var_list:
+                                index = ex_var_list.index(pr)
+                                item_id = id[index]
+                                item = CartItems.objects.get(id=item_id)
+                                item.quantity += 1
+                                item.user = user
+                                item.save()
+                            else:
+                                cart_item=CartItems.objects.filter(cart=cart)
+                                for item in cart_item:
+                                    item.user =user
+                                    item.save()
 
-
-
-                    for item in cart_item:
-                        item.user =user
-                        item.save()
-                auth.login(request, user)
-                print("name found")
-                return redirect('/')
             except:
                 pass
-
-
             auth.login(request, user)
             print("name found")
-            return redirect('/')
+            messages.success(request,'You are now  logged in ')
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utlis.urlparse(url).query
+                print ('query >>>>>>>>',query)
+                params =dict(x.split('=') for x in query.split('&'))
+                if 'next' in params:
+                    next_page=params['next']
+                    return redirect(next_page)
+                print ('=============',params)
+            except:
+                return redirect('account:login')
+
         else:
             messages.error(request, 'incorrect password try again ')
             return redirect('account:login')
