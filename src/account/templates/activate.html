@@ -1,5 +1,9 @@
+{% extends 'product/base.html' %}
+
+
  {% load i18n %}
 {% autoescape off %}
+{% block body %}
 Hi {{ user.first_name}},
 please click on  below link to confirm register
 
@@ -8,4 +12,5 @@ please click on  below link to confirm register
 
 
 thanks
+{% endblock  %}
 {% endautoescape %}

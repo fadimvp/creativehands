@@ -83,7 +83,7 @@
     </div>
     <div class="container customer-order">
             <div class="customer-details">
-                        <form action="" method="POST">
+                        <form action="{% url 'order:place_order' %}" method="POST">
                             {% csrf_token %}
 
                 <h3 class="billing-title">Billing details</h3>
@@ -91,46 +91,51 @@
                     <div class="user-group">
                         <div class="first-name">
                             <label for="first-name">First name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control">
+                            <input name="first_name" type="text" class="form-control">
                         </div>
                         <div class="last-name">
                             <label for="last-name">Last name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control">
+                            <input name="last_name" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="country mt-3">
-                        <select name="country" class="countries form-control" id="countryId">
-                            <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>
-                        </select>
+<!--                        <select name="country" class="countries form-control" id="countryId">-->
+<!--                            <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>-->
+<!--                        </select>-->
+                        <div class="last-name">
+                            <label for="country">country <span class="text-danger">*</span></label>
+                            <input name="country" class="countries form-control" id="countryId"type="text" class="form-control">
+                        </div>
                     </div>
                     <div class="street-address mt-3">
                         <label for="street-address">Street address <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="House number and street name">
-                        <input type="text" class="form-control mt-3" placeholder="Apartment, suite, unit, etc. (optional)">
+                        <input name="address_1"type="text" class="form-control" placeholder="House number and street name">
+                        <input name="address_2" type="text" class="form-control mt-3" placeholder="Apartment, suite, unit, etc. (optional)">
                     </div>
                     <div class="town-city mt-3">
-                        <label for="town-city">Town / City <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
+                        <label for="town-city">Town d.d./ City <span class="text-danger">*</span></label>
+                        <input name="city" type="text" class="form-control">
 
                     </div>
                     <div class="postcode mt-3">
                         <label for="postcode-zip">Postcode / ZIP <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
+                        <input name="state" type="state" class="form-control">
 
                     </div>
                     <div class="phone mt-3">
                         <label for="phone">Phone <span class="text-danger">*</span></label>
-                        <input type="tel" class="form-control">
+                        <input name="phone" type="tel" class="form-control">
 
                     </div>
                     <div class="email mt-3">
-                        <label for="email">Phone <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control">
+                        <label for="email">email <span class="text-danger">*</span></label>
+                        <input name="email" type="email" class="form-control">
 
                     </div>
+
                 </div>
                 <button class="dif-ship-btn mt-3">
-                    <input type="checkbox" name="diff-add" id="dif-address-btn">
+                    <input type="checkbox"  id="dif-address-btn">
                     <label for="checkbox">Ship to a different address?</label>
                 </button>
                 <div class="different-address w-100">
@@ -142,7 +147,7 @@
                             </div>
                             <div class="last-name">
                                 <label for="last-name">Last name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control">
+                                <input name="" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="country mt-3">
@@ -157,7 +162,7 @@
                         </div>
                         <div class="town-city mt-3">
                             <label for="town-city">Town / City <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control">
+                            <input  type="text" class="form-control">
 
                         </div>
                         <div class="postcode mt-3">
@@ -179,7 +184,7 @@
                 </div>
                 <div class="note w-100">
                     <label for="note">Order notes (optional)</label>
-                    <textarea name="note" id="note" class="form-control"></textarea>
+                    <textarea name="order_note" id="note" class="form-control"></textarea>
                 </div>
             </div>
 
@@ -321,7 +326,7 @@
                     </ul>
                     <div class="confirmation">
                         <p>
-                            <input type="checkbox">
+                            <input name="i_agree" type="checkbox">
                             <label for="confirm">I have read and agree to the website <a href="#">terms and conditions</a> <span class="requred text-danger">*</span>
                             </label>
                         </p>

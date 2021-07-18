@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-app_name ='product'
+app_name ='cart'
 urlpatterns = [
     path('', views.CartView, name='cart_item'),                           # to home page or display all products
     path('v/', views.v, name='v'),                           # to home page or display all products
