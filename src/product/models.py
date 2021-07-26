@@ -6,6 +6,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.text import slugify
+from PIL import Image
 
 # Create your models here.
 
@@ -142,13 +143,21 @@ class Product_Img(models.Model):
 
 
 class Category(models.Model):
+
+
     CATName = models.CharField(max_length=255)
     CATParent = models.ForeignKey('self', limit_choices_to={'CATParent__isnull': True}, on_delete=models.CASCADE,
                                   blank=True, null=True)
     CATDesc = models.TextField()
     slug = models.SlugField()
     CATImg = models.ImageField(upload_to='Category/')
-
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+        img = Image.open(self.CATImg.path)
+        if img.width > 200 or img.height > 200:
+            output_size =(200,200)
+            img.thumbnail(output_size)
+            img.save(self.CATImg.path)
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categoryios'
@@ -156,8 +165,10 @@ class Category(models.Model):
     def get_url(self):
         return reverse('products:category_slug', args={self.slug})
 
+
     def __str__(self):
         return self.CATName
+
 
 
 class Alternative(models.Model):

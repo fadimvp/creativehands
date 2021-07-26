@@ -68,6 +68,7 @@ get_url  '''
 def category(request, category_slug):
     d = get_object_or_404(Category, slug=category_slug)
 
+
     context = {
         'd': d
     }

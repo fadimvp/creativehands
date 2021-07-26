@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
@@ -23,45 +24,59 @@ def place_order(request, total=0, quantity=0):
         quantity += cart_item.quantity
     total_tex = (total + tax)
     print(cart_item, "=====================form1=============")
+    data = Order()
 
-    if request.method=='POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            print(form,"=====================form2=============")
-            data = Order()
-            print(data,"=====================form3=============")
+    if data.i_agree != True :
+        messages.success(request, 'thank you for order  ')
 
-            data.user =current_user
-            data.first_name = form.cleaned_data['first_name']
-            data.last_name = form.cleaned_data['last_name']
-            data.phone = form.cleaned_data['phone']
-            data.email = form.cleaned_data['email']
-            data.address_1 = form.cleaned_data['address_1']
-            data.address_2 = form.cleaned_data['address_2']
-            data.country = form.cleaned_data['country']
-            data.state = form.cleaned_data['state']
-            data.order_note = form.cleaned_data['order_note']
-            data.total = total_tex
-            data.tax = tax
-            data.ip = request.META.get('REMOTE_ADDR')
-            data.i_agree =form.cleaned_data['i_agree']
-            data.i_agree =True
-            print('=======================i_agree=======',data.i_agree)
-            data.save()
+        if request.method=='POST'  :
+            form = OrderForm(request.POST)
 
-            #Generate odder number
+            if form.is_valid() and  data.i_agree != True :
 
-            yr = int(datetime.date.today().strftime('%Y'))
-            mt = int(datetime.date.today().strftime('%m'))
-            dt = int(datetime.date.today().strftime('%d'))
-            d = datetime.date(yr, mt, dt)
-            current_date = d.strftime('%Y%m%d')
-            order_number = current_date + str(data.id)
-            data.order_number = order_number
-            data.save()
+                data = Order()
+
+                data.user =current_user
+                data.first_name = form.cleaned_data['first_name']
+                data.last_name = form.cleaned_data['last_name']
+                data.phone = form.cleaned_data['phone']
+                data.email = form.cleaned_data['email']
+                data.address_1 = form.cleaned_data['address_1']
+                data.address_2 = form.cleaned_data['address_2']
+                data.country = form.cleaned_data['country']
+                data.state = form.cleaned_data['state']
+                data.city = form.cleaned_data['city']
+                data.order_note = form.cleaned_data['order_note']
+                data.total = total_tex
+                data.tax = tax
+                data.ip = request.META.get('REMOTE_ADDR')
+                if data.i_agree != True :
+                  data.i_agree =form.cleaned_data['i_agree']
+                  data.i_agree == True
+                  print('=======================i_agree=======',data.i_agree)
+                  data.save()
+
+                else:
+                  print('=======================else =======',data.i_agree)
+
+                  data.save()
+
+                data.save()
+
+                #Generate odder number
+
+                yr = int(datetime.date.today().strftime('%Y'))
+                mt = int(datetime.date.today().strftime('%m'))
+                dt = int(datetime.date.today().strftime('%d'))
+                d = datetime.date(yr, mt, dt)
+                current_date = d.strftime('%Y%m%d')
+                order_number = current_date + str(data.id)
+                data.order_number = order_number
+                data.save()
+                return redirect('cart:checkout')
             return redirect('cart:checkout')
-    else:
-        return redirect('cart:checkout')
+        else:
+            return redirect('cart:checkout')
 
 def payments(request):
 
