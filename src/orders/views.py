@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.http import HttpResponse
-
+import urllib.request
+import json
 from django.shortcuts import render, redirect
 from cart.models import CartItems
 from .forms import OrderForm
@@ -26,17 +27,17 @@ def place_order(request, total=0, quantity=0):
     print(cart_item, "=====================form1=============")
     data = Order()
 
-    if data.i_agree != True :
+    if data.i_agree != True:
         messages.success(request, 'thank you for order  ')
 
-        if request.method=='POST'  :
+        if request.method == 'POST':
             form = OrderForm(request.POST)
 
-            if form.is_valid() and  data.i_agree != True :
+            if form.is_valid() and data.i_agree != True:
 
                 data = Order()
 
-                data.user =current_user
+                data.user = current_user
                 data.first_name = form.cleaned_data['first_name']
                 data.last_name = form.cleaned_data['last_name']
                 data.phone = form.cleaned_data['phone']
@@ -49,21 +50,28 @@ def place_order(request, total=0, quantity=0):
                 data.order_note = form.cleaned_data['order_note']
                 data.total = total_tex
                 data.tax = tax
-                data.ip = request.META.get('REMOTE_ADDR')
-                if data.i_agree != True :
-                  data.i_agree =form.cleaned_data['i_agree']
-                  data.i_agree == True
-                  print('=======================i_agree=======',data.i_agree)
-                  data.save()
+                src = urllib.request.urlopen("https://api.ipify.org/?format=json")
+                getsrc = src.read()
+                print(getsrc, "=====================")
+                d = json.loads(getsrc)
+                json.dumps(d)
+                data.ip = d
+                print(d)
+
+                if data.i_agree != True:
+                    data.i_agree = form.cleaned_data['i_agree']
+                    data.i_agree == True
+                    print('=======================i_agree=======', data.i_agree)
+                    data.save()
 
                 else:
-                  print('=======================else =======',data.i_agree)
+                    print('=======================else =======', data.i_agree)
 
-                  data.save()
+                    data.save()
 
                 data.save()
 
-                #Generate odder number
+                # Generate odder number
 
                 yr = int(datetime.date.today().strftime('%Y'))
                 mt = int(datetime.date.today().strftime('%m'))
@@ -73,11 +81,19 @@ def place_order(request, total=0, quantity=0):
                 order_number = current_date + str(data.id)
                 data.order_number = order_number
                 data.save()
+                order = Order.objects.get(user=current_user, is_order=False, order_number=order_number)
+                context = {
+                    'order': order,
+                    'cart_items': cart_items,
+                    'tax': tax,
+                    'total': total,
+                    'total_tex': total_tex,
+                }
                 return redirect('cart:checkout')
             return redirect('cart:checkout')
         else:
             return redirect('cart:checkout')
 
-def payments(request):
 
+def payments(request):
     pass

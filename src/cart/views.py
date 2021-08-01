@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
+
 # Create your views here.
 from django.urls import reverse
 from product.models import Product, Variation, Alternative
@@ -31,6 +32,14 @@ def add_cart(request, product_id):  # get product.id to  url
     product = Product.objects.get(id=product_id)
     # if the user is authenticated
     if current_user.is_authenticated:
+        print("فى حاله عدم تغير ")
+
+        product = Product.objects.get(id=product_id)
+        product.stock -= 1                           # if you auth decrement one from stock
+        if product.stock == -1:
+            return redirect('cart:cart_item')
+        product.save()
+
         product_variation = []
         if request.method == 'POST':
             for item in request.POST:
@@ -40,7 +49,6 @@ def add_cart(request, product_id):  # get product.id to  url
                     variation = Variation.objects.get(product=product, variation_category__exact=key,
                                                       variation_vale__exact=value)
                     product_variation.append(variation)
-                    print(variation, "3")
                 except:
                     pass
 
@@ -95,7 +103,6 @@ def add_cart(request, product_id):  # get product.id to  url
                     variation = Variation.objects.get(product=product, variation_category__exact=key,
                                                       variation_vale__exact=value)
                     product_variation.append(variation)
-                    print(variation, "3")
                 except:
                     pass
 
@@ -125,7 +132,6 @@ def add_cart(request, product_id):  # get product.id to  url
                 exists_variation = item.variations.all()
                 ex_var_list.append(list(exists_variation))
                 id.append(item.id)
-            print(exists_variation)
             if product_variation in ex_var_list:
                 index = ex_var_list.index(product_variation)
                 item_id = id[index]
