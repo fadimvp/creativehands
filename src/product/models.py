@@ -39,7 +39,7 @@ class Product(models.Model):
     PRDISNew = models.BooleanField(default=False)
     PRDISbest = models.BooleanField(default=False)
     stock = models.IntegerField(default=0)
-    tax = models.DecimalField(max_digits=2, decimal_places=2, default=0.05)
+    tax = models.DecimalField(max_digits=3, decimal_places=2, default=0.15)
 
     # Additional data
     on_sale = models.BooleanField(default=False)
@@ -143,7 +143,6 @@ class Product_Img(models.Model):
 
 
 class Category(models.Model):
-
 
     CATName = models.CharField(max_length=255)
     CATParent = models.ForeignKey('self', limit_choices_to={'CATParent__isnull': True}, on_delete=models.CASCADE,

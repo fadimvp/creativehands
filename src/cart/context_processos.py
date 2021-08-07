@@ -23,7 +23,7 @@ def counter(request):
     return dict(cart_count=cart_count)
 
 
-def CartView(request, total=0, quantity=0, tax=0, cart_items=None):
+def cart(request, total=0, quantity=0, tax=0, cart_items=None):
     try:
         tax = 0
         if request.user.is_authenticated:
@@ -33,24 +33,20 @@ def CartView(request, total=0, quantity=0, tax=0, cart_items=None):
             cart = Cart.objects.get(cart_id=_cart_id(request))
 
             cart_items = CartItems.objects.filter(cart=cart)
-        for cart_item in cart_items:
-            total += (cart_item.product.PRDPrice * cart_item.quantity)
-
-            quantity += cart_item.quantity
-            tax += (total) * (cart_item.product.tax)
-        total_tex = (total + tax)
-        print(total)
-
-    except ObjectDoesNotExist:
-        total_tex = (total + tax)
+    except:
+        pass
+    for cart_item in cart_items:
+        total += (cart_item.product.PRDPrice * cart_item.quantity)
+        quantity += cart_item.quantity
+        tax += (total) * (cart_item.product.tax)
+        print(total, "dklslfkds")
+    total_tex = (total + tax)
 
 
     context = {
         'cart_items': cart_items,
-        'quantity': quantity,
-        'total': total,
-        'tax': tax,
-        'total_tex': total_tex,
+        'quantity':quantity,
+
 
     }
     return dict(context)

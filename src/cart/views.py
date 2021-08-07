@@ -171,16 +171,26 @@ def CartView(request, total=0, quantity=0, tax=0, cart_items=None):
         if request.user.is_authenticated:
 
             cart_items = CartItems.objects.filter(user=request.user)
+            for cart_item in cart_items:
+                tax = 0
+                total += (cart_item.product.PRDPrice * cart_item.quantity)
+                quantity += cart_item.quantity
+                tax += (total) * (cart_item.product.tax)
+
+                print(total, "dklslfkds")
+            total_tex = (total + tax)
+
         else:
             cart = Cart.objects.get(cart_id=_cart_id(request))
 
             cart_items = CartItems.objects.filter(cart=cart)
-        for cart_item in cart_items:
-            total += (cart_item.product.PRDPrice * cart_item.quantity)
-            quantity += cart_item.quantity
-            tax += (total) * (cart_item.product.tax)
-            print(total,"dklslfkds")
-        total_tex = (total + tax)
+            for cart_item in cart_items:
+                total += (cart_item.product.PRDPrice * cart_item.quantity)
+                quantity += cart_item.quantity
+                tax += (total) * (cart_item.product.tax)
+                print(total,"dklslfkds")
+            total_tex = (total + tax)
+
 
 
     except ObjectDoesNotExist:

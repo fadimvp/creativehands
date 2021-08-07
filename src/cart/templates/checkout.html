@@ -337,7 +337,7 @@
                             </label>
                         </p>
 
-                        <button class="form-control place-btn" type="submit">Place order</button>
+                        <button class="form-control place-btn" type="submit">{% for d in cart_items%}{{d.product.PRDPrice}}{%endfor %}Place order</button>
 
                     </div>
                 </div>

@@ -157,28 +157,32 @@
 
 <!-- Mini cart summary section start  -->
 <!-- Mini cart summary section start  -->
+
 <div class="cart-info-base" id="cart-info-base">
     <!-- Cart information start  -->
     <div role="button" id="close-btn" class="close-btn">
         <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
     </div>
     <div class="card-info-wrap">
+                    {% for d in cart_items%}
+
         <div class="cart-info-itmes border-bt">
-            <!-- Items list start start  -->
+       <!-- Items list start start  -->
             <div class="cart-info-img">
+
                 <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} " alt="product-title"></a>
             </div>
             <div class="cart-info-content">
-                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <a class="product-title" href="#">{{d}} </a>
                 <dl>
                     <dt class="sold-by">Sold By:</dt>
                     <dd class="shop-name">
                         Wahed Nur
                     </dd>
                 </dl>
-                <span class="qty-price">1 x <span class="price">
+                <span class="qty-price">1 x {{ d.quantity}} <span class="price">
                         <bdi>
-                            8000.00
+                            {{d.product.PRDPrice}}
                         </bdi> SR
                     </span></span>
             </div>
@@ -186,6 +190,7 @@
                 <a href="#"><i class="fas fa-times"></i></a>
             </div>
         </div> <!-- Items list start end  -->
+            {% endfor %}
 
     </div>
     <!-- Cart information end  -->
